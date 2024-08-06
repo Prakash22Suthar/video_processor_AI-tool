@@ -4,7 +4,14 @@ from django import forms
 from allauth.account.forms import SignupForm
 from .models import Video
 
-
+class CustomSignupForm(SignupForm):
+    def save(self, commit=True):
+        user = super(CustomSignupForm, self).save(commit=False)
+        # Customize user here
+        if commit:
+            user.save()
+        return user
+    
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
