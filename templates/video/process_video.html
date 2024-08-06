@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block container_block %}
+
+    <h2>Here is your pdf file  click to download</h2>
+    <a class="btn btn-success" href="{{ pdf_url }}">Download PDF</a>
+
+{% endblock container_block %}

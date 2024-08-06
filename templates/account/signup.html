@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block container_block %}
+
+<h3>SignUp</h3>
+<div class="row g-3">
+    <form method="post" action="{% url 'account_signup' %}" id="signup-form">
+        {% csrf_token %}
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label" for="id_username">Username</label>
+                <div class="form-control-wrap">
+                    <input type="text" name="username" class="form-control" id="id_username" placeholder="username">
+                    <div class="error-message" id="username-error"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label" for="id_email">Email (Optional)</label>
+                <div class="form-control-wrap">
+                    <input type="email" name="email" class="form-control" id="id_email" placeholder="Email address">
+                    <div class="error-message" id="email-error"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label" for="id_password1">Password</label>
+                <div class="form-control-wrap"> 
+                    <input type="password" name="password1" class="form-control" id="id_password1" placeholder="password">
+                    <div class="error-message" id="password1-error"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label class="form-label" for="id_password2">Confirm Password</label>
+                <div class="form-control-wrap"> 
+                    <input type="password" name="password2" class="form-control" id="id_password2" placeholder="password">
+                    <div class="error-message" id="password2-error"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="col-12 btn btn-primary w-100" type="submit">
+            SignUp
+        </button>
+    </form>
+</div><!-- .row -->
+
+
+{% endblock container_block %}
+
+<script>
+    $(document).ready(function() {
+        $('#signup-form').on('submit', function(e) {
+            // Clear previous error messages
+            $('.error-message').text('');
+
+            let email = $('#id_email').val();
+            let password1 = $('#id_password1').val();
+            let password2 = $('#id_password2').val();
+
+            let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let passwordPattern = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            let hasError = false;
+
+            if (email && !emailPattern.test(email)) {
+                $('#email-error').text('Please enter a valid email address.');
+                hasError = true;
+            }
+
+            if (!passwordPattern.test(password1)) {
+                $('#password1-error').text('Password must contain at least one lowercase letter, one numeric digit, and one special character.');
+                hasError = true;
+            }
+
+            if (password1 !== password2) {
+                $('#password2-error').text('Passwords do not match.');
+                hasError = true;
+            }
+
+            if (hasError) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

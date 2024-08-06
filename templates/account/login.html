@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block container_block %}
+
+
+<div class="row">
+    
+    <h3>Login</h3>
+    <div class="row g-3">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="form-label" for="email-address">Username</label>
+                    <div class="form-control-wrap">
+                        <input type="text" name="login" class="form-control" id="id_login" placeholder="username">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label class="form-label d-flex" for="password">Password </label>
+                    <div class="form-control-wrap"> 
+                        <input type="password" name="password" class="form-control" id="id_password" placeholder="password">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <button class="col-12 btn btn-primary w-100" type="submit">
+                Account Login
+            </button>
+        </form>
+    </div><!-- .row -->
+</div>
+
+
+
+{% endblock container_block %}

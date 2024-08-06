@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block container_block %}
+    <div class="row">
+        <h4>We are here to help you</h4>
+        <p>upload file here <span class="blink">.....</span></p>
+        <form method="post" enctype="multipart/form-data" id="upload-form">
+            {% csrf_token %}
+
+                <label for="" class="form-label">{{form.title.label}}</label>
+                    {{form.title}}
+                    {% if form.title.errors %}
+                        {% for error in form.title.errors %}
+                            <p style="color: red;">{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                <label for="" class="form-label">{{form.video_file.label}}</label>
+                    {{form.video_file}}
+                    {% if form.video_file.errors %}
+                        {% for error in form.video_file.errors %}
+                            <p style="color: red;">{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    <br>
+            <button class="btn btn-primary id_upload" type="submit">Upload</button>
+        </form>
+    </div>
+    <div class="row d-none" id="id_processing">
+        <img src="{% static 'img/processing.gif' %}" alt="" height="100">
+    </div>
+{% endblock container_block %}
+
