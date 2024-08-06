@@ -1,7 +1,7 @@
 # Video to PDF File Converter Application
 
 ## Description
-This application converts video files into PDF documents, capturing each frame as an image within the PDF. 
+This application converts video files into PDF documents, capturing audio and convert audio text to PDF. 
 The application includes user authentication and permissions, allowing authenticated users to upload larger video files.
 
 ## Features
