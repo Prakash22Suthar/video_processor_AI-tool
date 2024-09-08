@@ -10,7 +10,7 @@ jobs:
       DJANGO_SETTING_MODULE: video_processor.settingss
     steps:
       - name:  checkout code
-        uses:  actions/checkout@2
+        uses:  actions/checkout@v2
 
       - name:  Set up python
         uses:  actions/setup-python@v5
