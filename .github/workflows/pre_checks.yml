@@ -1,0 +1,60 @@
+on:
+    push:
+        branches:
+            - main
+jobs:
+  code_formatting_checks:
+    name: check code formatting
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_SETTING_MODULE: video_processor.settingss
+    steps:
+      - name:  checkout code
+        uses:  actions/checkout@2
+
+      - name:  Set up python
+        uses:  actions/setup-python@v5
+        with:  
+          python-version:  "3.10"
+          
+      - name:  Create virtual environment
+        run:  |
+          python3 -m venv .venv
+          
+      - name:  Activating virtual environment
+        run:  |
+          source .venv/bin/activate
+          
+      - name: Upgrade pip
+        run: |
+          python3 -m pip install --upgrade pip
+
+      - name: Installing dev dependencies
+        run: |
+          python3 -m pip install -r requirements.dev.txt
+
+      - name: Run code formatting checks (flake8)
+        run: |
+          export TEST_ENVIRON=1;
+          set -o pipefail
+          python3 -m flake8 . | tee flake8-logs.txt
+
+      - name: Run code formatting checks (pylint)
+        run: |
+          export TEST_ENVIRON=1;
+          set -o pipefail
+          python3 -m pylint video_processor video_app | tee pylint-logs.txt
+
+      - name: Saving artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flake8 report
+          path: flake8-logs.txt
+
+      - name: Saving artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Pylint report
+          path: pylint-logs.txt
